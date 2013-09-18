@@ -21,7 +21,7 @@ def P_alph(X):
         alph = X[2]
         t = X[3]   
         term1 = -X_1
-        term2 = 0.5e0*X_2*(1+fatt*math.cos(t))**2
+        term2 = 0.5e0*X_2*(1+ft*math.cos(t))**2
         Xin = np.insert(X,0,ft)
         term3 = (1./(2.*math.pi*alph**2))*get_integral(Xin)
     
@@ -44,8 +44,8 @@ def get_integral(Xin):
         N = np.size(Xin) - 5
         
         Xin = np.insert(Xin, 0, N)
-        arg_in_end = np.concatenate(Xin, t_cap) 
-        arg_in_mid = np.concatenate(Xin,t_cap_mid)
+        arg_in_end = np.concatenate((Xin, t_cap)) 
+        arg_in_mid = np.concatenate((Xin,t_cap_mid))
         
         H_j = in_integral(arg_in_end)
         H_mid = in_integral(arg_in_mid)
