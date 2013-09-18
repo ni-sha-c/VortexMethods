@@ -19,11 +19,12 @@ I haven't evaluated the matrix another time because the paper says keeping it as
 * The <a href="http://www.codecogs.com/eqnedit.php?latex=P_\alpha" target="_blank"><img src="http://latex.codecogs.com/gif.latex?P_\alpha" title="P_\alpha" /></a> evaluation is 
 in the module P. In this module, there is:
 
+
     in_integral 
     
 
-that finds the inside integral at a given <a href="http://www.codecogs.com/eqnedit.php?latex=\hat{t}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\hat{t}" title="\hat{t}" /></a>
-. The inside integral uses Gauss quadrature and the integrand is evaluated in  G.py
+that finds the inner integral at a given <a href="http://www.codecogs.com/eqnedit.php?latex=\hat{t}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\hat{t}" title="\hat{t}" /></a>
+. The inner integral uses Gauss quadrature and the integrand is evaluated in  G.py
 
 For lack of a better idea, I used Simpson's rule manually in 
  
