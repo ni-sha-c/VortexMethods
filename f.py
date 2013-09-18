@@ -13,5 +13,8 @@ def f(X):
     
     res = np.cos(t*n)
     
+    res1 = res*(X[1:N+1])
     
-    return res
+    res2 = np.sum(res1)
+    
+    return res2
