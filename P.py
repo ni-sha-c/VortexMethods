@@ -22,7 +22,7 @@ def P_alph(X):
         t = X[3]   
         term1 = -X_1
         term2 = 0.5e0*X_2*(1+fatt*math.cos(t))**2
-        Xin = np.insert(X,[0,0], [t,ft])
+        Xin = np.insert(X,0,ft)
         term3 = (1./(2.*math.pi*alph**2))*get_integral(Xin)
     
         res = term1 + term2 + term3
@@ -41,7 +41,7 @@ def get_integral(Xin):
         t_cap_mid = np.linspace(a+dt_cap/2,b-dt_cap/2,n-1)  
      
         #Number of fourier coefficients
-        N = np.size(Xin) - 4
+        N = np.size(Xin) - 5
         
         Xin = np.insert(Xin, 0, N)
         arg_in_end = np.concatenate(Xin, t_cap) 
@@ -59,12 +59,12 @@ def in_integral(t_cap_all):
     
         count = 0
         N = t_cap_all[0]
-        t = t_cap_all[1]
-        ft = t_cap_all[2]
-        k = t_cap_all[3]
+        ft = t_cap_all[1]
+        k = t_cap_all[2]
+        t = t_cap_all[5]
 
-        foco = t_cap_all[5:N+4]
-        t_cap_all = t_cap_all[N+5:np.size(t_cap_all)]    
+        foco = t_cap_all[6:N+5]
+        t_cap_all = t_cap_all[N+6:np.size(t_cap_all)-1]    
         res = np.zeros(shape=t_cap_all.size)
     
         for t_cap in t_cap_all:
