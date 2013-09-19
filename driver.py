@@ -53,6 +53,7 @@ print "b is", b
 for i in range(0,M):
     d = solve(A,b)
     X1 = X1 + d
-    b = pop_b(X1,alpha,t,N)
+    X2 = np.insert(X1, [2,2], [alpha,t])
+    b = pop_b(X2,alpha,t,N)
     
     
