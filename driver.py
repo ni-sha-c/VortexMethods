@@ -54,6 +54,6 @@ for i in range(0,M):
     d = solve(A,b)
     X1 = X1 + d
     X2 = np.insert(X1, [2,2], [alpha,t])
-    b = pop_b(X2,alpha,t,N)
+    b = pop_b(X2)
     
     
