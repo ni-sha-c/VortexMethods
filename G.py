@@ -1,4 +1,3 @@
-
 """
     Calculates G(r, r^, z-z^)
     

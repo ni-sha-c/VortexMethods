@@ -10,7 +10,7 @@ def pop_b(X_all):
     N = np.size(X_all)-2
     dt = math.pi/(N-1)
     t = 0
-    b = np.zeros((1,N))
+    b = np.zeros((N,1))
     for i in range(0,N):
         ti = t + i*dt
         

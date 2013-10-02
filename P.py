@@ -17,7 +17,7 @@ def P_alph(X):
         X_1 = X[0]
         X_2 = X[1]
         N = np.size(X)
-        ft = f(X[3:N])
+        ft = f(X[2:N])
         alph = X[2]
         t = X[3]   
         term1 = -X_1
@@ -62,13 +62,14 @@ def in_integral(t_cap_all):
         ft = t_cap_all[1]
         k = t_cap_all[2]
         t = t_cap_all[5]
+        alph = t_cap_all[4]
 
-        foco = t_cap_all[6:N+5]
-        t_cap_all = t_cap_all[N+6:np.size(t_cap_all)-1]    
+        foco = np.copy(t_cap_all[6:N+6])
+        t_cap_all = np.copy(t_cap_all[N+6:np.size(t_cap_all)])    
         res = np.zeros(shape=t_cap_all.size)
     
         for t_cap in t_cap_all:
-            foco1 = np.insert(foco,0,t_cap)
+            foco1 = np.insert(foco,[0,0],[alph,t_cap])
             ftcap = f(foco1)
             res[count] = sci.quadrature(G,0.,ftcap,args=(t_cap,ft,t,k))[0]
             count = count + 1
