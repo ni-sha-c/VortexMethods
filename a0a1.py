@@ -11,7 +11,7 @@ def a0a1(X):
     a1 = -sum(ot)
     sq = 0.5e0*np.sum(np.square(X[1:N]))
     alph = X[0]
-    a0 = np.sqrt(alph**2 - sq - 0.5e0*a1**2)
+    a0 = np.sqrt(alph**2 - sq - 0.5e0*(a1**2))
     x = np.array([a0,a1])
     return x
     

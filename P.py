@@ -21,7 +21,7 @@ def P_alph(X):
         alph = X[2]
         t = X[3]   
         term1 = -X_1
-        term2 = 0.5e0*X_2*(1+ft*math.cos(t))**2
+        term2 = -0.5e0*X_2*(1+ft*math.cos(t))**2
         Xin = np.insert(X,0,ft)
         term3 = (1./(2.*math.pi*alph**2))*get_integral(Xin)
     
@@ -31,7 +31,7 @@ def P_alph(X):
  
 def get_integral(Xin):
      
-        n = 1000
+        n = 50
         a = 0.e0
         b = 2*math.pi
      
@@ -71,7 +71,7 @@ def in_integral(t_cap_all):
         for t_cap in t_cap_all:
             foco1 = np.insert(foco,[0,0],[alph,t_cap])
             ftcap = f(foco1)
-            res[count] = sci.quadrature(G,0.,ftcap,args=(t_cap,ft,t,k))[0]
+            res[count] = sci.quadrature(G,0.,ftcap,args=(t_cap,ft,t))[0]
             count = count + 1
         
         return res

@@ -7,21 +7,21 @@ import numpy as np
 from numpy.linalg import solve
 from P import P_alph
 from rhs import pop_b
-alpha = 1.0e0
+alpha = 3.e-01
 #X1 is X in the first iteration.
-k = 182.e-04
-W = 3703.e-04
+k = 0.2967
+W = 0.7402
 t = 0.e0 
 delt = 0.008
-X1 = np.array([ k, W, -0.27e0, \
-     0.0907e0, 0.0318, -0.04e0, 0.0099e0,  0.0091,  -0.0092,  0.0013,  0.0032,  -0.0024e0, \
-     0.0e0,  0.0011,  -0.0007,  0.0,  0.0003,  -0.0002])
+X1 = np.array([ k, W, 0.2997, \
+     -0.0020, -0.0188, 0.0022, 0.0007,  -0.0002,  -0.000,  0.000,  0.000,  -0.00, \
+     0.0,  0.0,  -0.,  0.0,  0.,  -0.])
 #Number of fourier coefficients + 2 
-#Also, equal to number of iterations 
+
 N = np.size(X1)     
-M = 2
+M = 10
 A = np.zeros((N,N))
-b = np.zeros((N,1))
+b = np.zeros(N)
 
 st_time = 0
 en_time = math.pi
@@ -45,15 +45,14 @@ for j in range(0,N):
         Pxj = (P_1-P_2)/delt
         A[j][i] = Pxj
     
-    b[j] = P_2 
+    b[j] = -P_2 
     
-print "A is", A
-print "b is", b
+b = np.transpose(b)
 print "Solving to get better approximations..."
 for i in range(0,M):
     print "n = ", i
     d = solve(A,b)
-    X1 = X1 + np.transpose(d)[0]
+    X1 = X1 + np.transpose(d)
     X2 = np.insert(X1, [2,2], [alpha,t])
     b = pop_b(X2)
     
