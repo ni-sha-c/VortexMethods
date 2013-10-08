@@ -1,4 +1,3 @@
-
 """
     Driver module.
 """
@@ -7,15 +6,16 @@ import numpy as np
 from numpy.linalg import solve
 from P import P_alph
 from rhs import pop_b
-alpha = 3.e-01
+alpha = 0.2e0
 #X1 is X in the first iteration.
-k = 0.2967
-W = 0.7402
+k = 0.4324
+W = 0.8488
 t = 0.e0 
 delt = 0.008
-X1 = np.array([ k, W, 0.2997, \
-     -0.0020, -0.0188, 0.0022, 0.0007,  -0.0002,  -0.000,  0.000,  0.000,  -0.00, \
-     0.0,  0.0,  -0.,  0.0,  0.,  -0.])
+X1 = np.array([ k, W, -0.0067, 0.0005, 0.0001, -0.000, \
+              0.000, 0.00, -0.000, 0.0000, 0.0000, \
+              0.0000, 0.000, 0.0000, -0.0000, 0.000, \
+              0.000, -0.0000])
 #Number of fourier coefficients + 2 
 
 N = np.size(X1)     
@@ -52,9 +52,10 @@ print "Solving to get better approximations..."
 for i in range(0,M):
     print "n = ", i
     d = solve(A,b)
-    X1 = X1 + np.transpose(d)
-    X2 = np.insert(X1, [2,2], [alpha,t])
-    b = pop_b(X2)
-    
+    X2 = X1 + np.transpose(d)
+    X3 = np.insert(X2, [2,2], [alpha,t])
+    b = pop_b(X3)
+    X1 = np.copy(X2)
+    print "d=", d
 
     

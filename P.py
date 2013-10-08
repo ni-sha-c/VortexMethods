@@ -1,5 +1,5 @@
 """ 
-    P_alph(X)@t = -X_1 + 0.5*X_2(1+fcost)^2
+    P_alph(X)@t = -X_1 - 0.5*X_2(1+fcost)^2
     + 0.5/(pi*alph**2)*int_0^2*pi dt_cap *
     int_0^f_cap G(1+fcost,1+s_cap cos t_cap,
     fsint - s_cap sin t_cap)s_cap ds_cap 
@@ -9,7 +9,7 @@
 import numpy as np
 import scipy.integrate as sci
 from f import f
-from G import G
+from G import G,G_int
 import math
 
 
@@ -23,15 +23,31 @@ def P_alph(X):
         term1 = -X_1
         term2 = -0.5e0*X_2*(1+ft*math.cos(t))**2
         Xin = np.insert(X,0,ft)
-        term3 = (1./(2.*math.pi*alph**2))*get_integral(Xin)
+        term3 = (1./(2.*math.pi*alph**2))*get_integral_gauss(Xin)
     
         res = term1 + term2 + term3
         return res
      
- 
-def get_integral(Xin):
+def get_integral_gauss(Xin):
+        
+        res = sci.quadrature(get_in_gauss,0.,2*math.pi,args=(Xin))[0]
+        return res
+        
+def get_in_gauss(tcap, Xin):
+        
+        ft = Xin[0]
+        alph = Xin[3]
+        t = Xin[4]
+        N  = np.size(Xin)
+        X_f = np.copy(Xin[5:N])
+        X_f = np.insert(X_f,[0,0],[alph,tcap])
+        ftcap = f(X_f)
+        res = sci.quadrature(G_int,0.,ftcap,args=(tcap,ft,t))[0]
+        return res 
+              
+def get_integral_simp(Xin):
      
-        n = 50
+        n = 1000
         a = 0.e0
         b = 2*math.pi
      
@@ -55,7 +71,7 @@ def get_integral(Xin):
     
         return int_simpson            
     
-def in_integral(t_cap_all):
+def in_integral_simp(t_cap_all):
     
         count = 0
         N = t_cap_all[0]
@@ -71,7 +87,7 @@ def in_integral(t_cap_all):
         for t_cap in t_cap_all:
             foco1 = np.insert(foco,[0,0],[alph,t_cap])
             ftcap = f(foco1)
-            res[count] = sci.quadrature(G,0.,ftcap,args=(t_cap,ft,t))[0]
+            res[count] = sci.quadrature(G_int,0.,ftcap,args=(t_cap,ft,t))[0]
             count = count + 1
         
         return res
