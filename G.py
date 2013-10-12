@@ -12,10 +12,10 @@ def G(x, t_cap, f, t):
     r = 1. + f*math.cos(t)
     rcap = 1 + x*math.cos(t_cap)
     zmzcap = f*math.sin(t) - x*math.sin(t_cap)
-    k = np.sqrt(4*r*rcap/((r+rcap)**2 + zmzcap**2))
+    k = 4*r*rcap/((r+rcap)**2 + zmzcap**2)
     term1 = np.sqrt((r+rcap)**2 + zmzcap**2)
     term1 = term1*rcap
-    term2 = (1.e0 - (k**2)*0.5e0)*scsp.ellipk(k**2)
-    term2 = term2 - scsp.ellipe(k**2)
+    term2 = (1.e0 - (k)*0.5e0)*scsp.ellipk(k)
+    term2 = term2 - scsp.ellipe(k)
     return term1*term2
     
