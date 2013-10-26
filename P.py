@@ -35,11 +35,11 @@ class X_alph:
         ft = f(np.insert(Xff,0,t))
         term1 = -X_1
         term2 = -0.5e0*X_2*(1+ft*math.cos(t))**2
-        term3 = (1./(2.*math.pi*self.alph**2))*self.get_integral_gauss(t,ft)
+        term3 = (1./(2.*math.pi*self.alph**2))*self.get_integral_simp(ft,t)
         res = term1 + term2 + term3
         return res
      
-    def get_integral_gauss(self,t,ft):
+    def get_integral_gauss(self,ft,t):
         res = sci.quadrature(self.get_in_gauss,0.,2*math.pi,args=(ft,t), \
         vec_func=False)[0]
         return res
@@ -88,52 +88,20 @@ class X_alph:
         
         return np.transpose(b)
                 
-    def get_integral_simp(Xin):
-     
-        n = 1000
-        a = 0.e0
-        b = 2*math.pi
-     
-        dt_cap = (b-a)/(n-1)
-     
-        t_cap = np.linspace(a,b,n)
-        t_cap_mid = np.linspace(a+dt_cap/2,b-dt_cap/2,n-1)  
-     
-        #Number of fourier coefficients
-        N = np.size(Xin) - 5
-        
-        Xin = np.insert(Xin, 0, N)
-        arg_in_end = np.concatenate((Xin, t_cap)) 
-        arg_in_mid = np.concatenate((Xin,t_cap_mid))
-        
-        H_j = in_integral(arg_in_end)
-        H_mid = in_integral(arg_in_mid)
-      
-        int_simpson = (dt_cap/6.) * (2.*sum(H_j) - (H_j[0] + H_j[-1]) \
-                                    + 4.*sum(H_mid))
+    def get_integral_simp(self,ft,t):
+        st_tcap = 0.e0
+        end_tcap = 2.e0*math.pi
+        n = 500
+        tcap_all = np.linspace(st_tcap, end_tcap, n)
+        i = 0
+        intgd = np.zeros(n)
+        for tcap in tcap_all:
+            intgd[i] = self.get_in_gauss(tcap,ft,t) 
+            i = i + 1
+        res = sci.simps(intgd,tcap_all)
+        return res  
+                 
     
-        return int_simpson            
     
-    def in_integral_simp(t_cap_all):
-    
-        count = 0
-        N = t_cap_all[0]
-        ft = t_cap_all[1]
-        k = t_cap_all[2]
-        t = t_cap_all[5]
-        alph = t_cap_all[4]
-
-        foco = np.copy(t_cap_all[6:N+6])
-        t_cap_all = np.copy(t_cap_all[N+6:np.size(t_cap_all)])    
-        res = np.zeros(shape=t_cap_all.size)
-    
-        for t_cap in t_cap_all:
-            foco1 = np.insert(foco,[0,0],[alph,t_cap])
-            ftcap = f(foco1)
-            res[count] = sci.quadrature(G_int,0.,ftcap,args=(t_cap,ft,t))[0]
-            count = count + 1
-        
-        return res
-         
     
     
